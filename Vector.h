@@ -1,89 +1,70 @@
-private:
-  int *vec_ptr; //Points to the vector's dynamic array
-  int vec_size, vec_capacity; //Same as size and capacity for std::vector
+/* Garritt Baker
+   09/27/2024
+   Vector Header File
+*/
 
+class Vector {
+private:
+    int *vec_ptr;
+    int vec_size;
+    int vec_capacity;
 
 public:
-  Vector();
-  /* Description:
-   *    Default constructor.  Initializes an empty vector.
-   * Post-conditions:
-   *    vec_ptr is NULL, vec_size=0, and vec_capacity=0.
-   */
-
-
-  Vector(const Vector &other);
-  /* Description:
-   *    Copy constructor.  Initializes a dynamic array of the appropriate
-   *    size/capacity and copies data from other's array to the new array.
-   * Post-conditions:
-   *    vec_ptr is initialized, and its array contains other.vec_ptr's data,
-   *    vec_size=other.vec_size, and vec_capacity=other.vec_capacity.
-   */
-
-
-  ~Vector();
-  /* Description:
-   *    Destructor.  Deallocates vec_ptr.
-   * Postconditions:
-   *    vec_ptr has been deallocated, current_size=0, and capacity=0.
-   */
-
- 
-  Vector& operator=(const Vector &other);
-  /* Description:
-   *    Assignment operator.  Initializes a dynamic array of the appropriate
-   *    size/capacity and copies data from other's array to the new array.
-   * Post-conditions:
-   *    vec_ptr is initialized, and its array contains other.vec_ptr's data,
-   *    vec_size=other.vec_size, and vec_capacity=other.vec_capacity.
-   */
- 
- 
-  int size();
-  /* Description:
-   *    Returns the current number of elements in the vector.
-   */
-
- 
-
-  int capacity();
-  /* Description:
-   *    Returns the currently allocated storage capacity of the vector.
-   */
-
-
-
-  void push_back(int element);
-  /* Description:
-   *    Similar to std::vector.push_back(int element), stores element at the end of the vector.
-   * Postconditions:
-   *    Item element has is stored at the end of the vector.
-   * Notes:
-   *    If necessary, calls reserve() before adding element to the end of the vector.
-   *    This reserve doubles the current capacity of the vector.
-   */
-
-
-  void reserve(int n);
-  /* Description:
-   *    Requests that the vector capacity be resized at least enough to contain n elements.
-   *
-   *    If n is greater than the current capacity, the function causes the container to reallocate
-   *    its storage increasing its capacity to n (or greater).
-   *
-   *    If n is less than or equal to the current capacity, the call does nothing (no reallocation
-   *    or change in vector capacity).
-   *
-   *    This function has no effect on vector size and cannot alter its elements.
-   *
-   * Postconditions:
-   *    Vector capacity is now n.  Vector size (and contents) remains the same.
-   *
-   */
-
-
-  int& operator[](unsigned int index); 
-  /* Description:
-   *    Returns a reference to the element at position index.
-   */
+    
+    Vector() : vec_ptr(nullptr), vec_size(0), vec_capacity(0) {}
+    
+    Vector(const Vector &other) : vec_size(other.vec_size), vec_capacity(other.vec_capacity) {
+        vec_ptr = new int[vec_capacity];
+        for (int i = 0; i < vec_size; ++i) {
+            vec_ptr[i] = other.vec_ptr[i];
+        }
+    }
+    
+    ~Vector() {
+        delete[] vec_ptr;
+    }
+    
+    Vector& operator=(const Vector &other) {
+        if (this != &other) {
+            delete[] vec_ptr;
+            vec_size = other.vec_size;
+            vec_capacity = other.vec_capacity;
+            vec_ptr = new int[vec_capacity];
+            for (int i = 0; i < vec_size; ++i) {
+                vec_ptr[i] = other.vec_ptr[i];
+            }
+        }
+        return *this;
+    }
+    
+    int size() const {
+        return vec_size;
+    }
+    
+    int capacity() const {
+        return vec_capacity;
+    }
+    
+    void push_back(int element) {
+        if (vec_size == vec_capacity) {
+            reserve(vec_capacity == 0 ? 1 : 2 * vec_capacity);
+        }
+        vec_ptr[vec_size++] = element;
+    }
+    
+    void reserve(int n) {
+        if (n > vec_capacity) {
+            int *new_ptr = new int[n];
+            for (int i = 0; i < vec_size; ++i) {
+                new_ptr[i] = vec_ptr[i];
+            }
+            delete[] vec_ptr;
+            vec_ptr = new_ptr;
+            vec_capacity = n;
+        }
+    }
+    
+    int& operator[](unsigned int index) {
+        return vec_ptr[index];
+    }
+};
