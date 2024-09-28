@@ -1,3 +1,16 @@
+/**
+ * @file Vector.cpp
+ * @author Garritt Baker
+ * @date 2024-09-27
+ * @brief cpp file of the Vector class in Vector.h
+ * 
+ * 
+ */
+
+
+
+
+
 #include "Vector.h"
 #include <iostream>
 

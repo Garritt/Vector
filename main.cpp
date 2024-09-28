@@ -1,7 +1,13 @@
-/* Author: Garritt Baker
-   Date: 09/27/2024
-   Assignment: Vector
-*/
+/**
+ * @file main.cpp
+ * @author Garritt Baker
+ * @date 2024-09-27
+ * @brief Main file of the Vector class found in Vector.h
+ * 
+ * 
+ */
+
+
 
 
 

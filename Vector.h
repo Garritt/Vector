@@ -1,7 +1,13 @@
-/* Garritt Baker
-   09/27/2024
-   Vector Header File
-*/
+/**
+ * @file Vector.h
+ * @author Garritt Baker
+ * @date 2024-09-27
+ * @brief Implementing a simple version of a Vector class to access the vector's contents and grow as needed.
+ * 
+ * 
+ */
+
+
 
 class Vector {
 private:
